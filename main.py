@@ -293,28 +293,17 @@ class Main():
 
         richDescStr, numLines = self.getLoadoutDesc(loadout)
         self.nextRowWrite(richDescStr, self.formatInfo, merged=True)
-        self.ws.set_row(self.currCellR, numLines * 25)
+        #self.ws.set_row(self.currCellR, numLines * 25)
         
     def getLoadoutDesc(self, loadout):
         lineCount = 0
         richString = tuple()
         if 'desc-gw' in loadout:
-            lines = self.wordWrap(loadout['desc-gw'])
-            richString += (self.formatInfoGW, lines[0])
-            for line in lines[1:]:
-                richString += (self.formatInfo, '\n',
-                               self.formatInfoGW, line)
-            lineCount += len(lines)
+            richString += (self.formatInfoGW, loadout['desc-gw'])
         if 'desc-gw' in loadout and 'desc-g8' in loadout:
-            richString += (self.formatInfo, '\n')
+            richString += ('\n',)
         if 'desc-g8' in loadout:
-            lines = self.wordWrap(loadout['desc-g8'])
-            richString += (self.formatInfoG8, lines[0])
-            for line in lines[1:]:
-                richString += (self.formatInfo, '\n',
-                               self.formatInfoG8, line)
-            lineCount += len(lines)
-            
+            richString += (self.formatInfoG8, loadout['desc-g8'])
         return richString, lineCount
         
                 
@@ -347,12 +336,10 @@ class Main():
             else:
                 continue
         
-            lines = self.wordWrap(info[key])
-            for line in lines:
-                richString += (self.formatInfo, '\n',
-                               style, line)
+            richString += ('\n', 
+                           style, info[key])
             self.nextRowWrite(richString, self.formatInfo, merged=True)
-            self.ws.set_row(self.currCellR, (len(lines) + 1) * 25)
+            #self.ws.set_row(self.currCellR, (len(lines) + 1) * 25)
             
     
     def nextRowWrite(self, strings, styles, spaces=(24,), merged=False):
@@ -368,8 +355,18 @@ class Main():
         The row being written will then be automatically resized according to 
         the number of lines taken. 
         '''
+        
+        def countNewLines(item):
+            if type(item) is tuple:
+                return sum(map(countNewLines, item))
+            elif type(item) is xw.format.Format:
+                return 0
+            
+            return item.count('\n')
+        
         self.currCellR += 1
         self.currCellC = 0
+        maxNumLines = 0
         
         if type(strings) == str or self.isRichString(strings):
             strings = (strings,)
@@ -384,27 +381,31 @@ class Main():
                                     self.currCellR, self.currCellC + spaces[i] - 1,
                                     '')
             if self.isRichString(string):
-                splittedRichString = self.splitRichStringForWrap(string)
-                numLines = splittedRichString.count('\n') + 1
+                splittedRichStr = self.splitRichStringForWrap(string, spaces[i])
+                numLines = countNewLines(splittedRichStr) + 1
+                
                 if styles[i] is not None:
-                    self.ws.write_rich_string(self.currCellR, self.currCellC, *splittedRichString, styles[i])
+                    self.ws.write_rich_string(self.currCellR, self.currCellC, *splittedRichStr, styles[i])
                 else:
-                    self.ws.write_rich_string(self.currCellR, self.currCellC, *splittedRichString)
+                    self.ws.write_rich_string(self.currCellR, self.currCellC, *splittedRichStr)
                     
             else:
-                lines = self.splitStringForWrap(string)
-                splittedStr = '\n'.join(lines)
-                numLines = len(lines)
+                splittedStr = self.splitSimpleStringForWrap(string, spaces[i])
+                numLines = countNewLines(splittedStr) + 1
                 if styles[i] is not None:
                     self.ws.write(self.currCellR, self.currCellC, splittedStr, styles[i])
                 else:
                     self.ws.write(self.currCellR, self.currCellC, splittedStr)
+                    
+            maxNumLines = max(maxNumLines, numLines)
                     
             if not merged[i] and styles[i] is not None:
                 for j in range(1, spaces[i]):
                     self.ws.write(self.currCellR, self.currCellC + j, '', styles[i]) 
             
             self.currCellC += spaces[i]
+            
+        self.ws.set_row(self.currCellR, maxNumLines * 25)
                            
                 
     def isRichString(self, richString):
@@ -417,19 +418,20 @@ class Main():
         
         return False
     
-    def splitStringForWrap(self, longString):
-        strings = longString.split('\n')
+    def splitStringForWrap(self, longString, space):
+        #strings = longString.split('\n')
+        strings = [longString]
         newStrings = []
         for string in strings:
-            lines = self.wordWrap(string)
+            lines = self.wordWrap(string, space)
             newStrings.extend(lines)
         
         return newStrings
     
-    def splitSimpleStringForWrap(self, longString):
-        return '\n'.join(self.splitStringForWrap(longString))
+    def splitSimpleStringForWrap(self, longString, space):
+        return '\n'.join(self.splitStringForWrap(longString, space))
     
-    def splitRichStringForWrap(self, richString):
+    def splitRichStringForWrap(self, richString, space):
         if len(richString) == 0:
             return tuple()
         
@@ -439,7 +441,7 @@ class Main():
         else:
             string = ele
             
-        newString = '\n'.join(self.splitStringForWrap(string))
+        newString = '\n'.join(self.splitStringForWrap(string, space))
         
         if isinstance(ele, xw.format.Format):
             richLines = (ele, newString)
@@ -447,9 +449,9 @@ class Main():
         else:
             richLines = (newString, )
         
-        return richLines + self.splitRichStringForWrap(richString)
+        return richLines + self.splitRichStringForWrap(richString, space)
     
-    def wordWrap(self, string):
+    def wordWrap(self, string, space=24):
         assert string != None
         
         words = deque(string.split(' '))
@@ -466,7 +468,7 @@ class Main():
                 
             totalLength = self.font.getsize(lineToAdd + word)[0]
             assert type(totalLength) is int
-            if totalLength > 530:
+            if totalLength > 530 * space / 24:
                 lines.append(lineToAdd)
                 lineToAdd = word + ' '
             else:
@@ -474,7 +476,7 @@ class Main():
             if hasNewLine:
                 lines.append(lineToAdd.strip())
                 lineToAdd = ''
-        lines.append(lineToAdd)
+        lines.append(lineToAdd.strip())
         
         return lines
         
