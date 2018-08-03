@@ -126,7 +126,18 @@ class Main():
         self.formatPotentialStar = self.formatPotentialRank
         self.formatPotentialSkills = self.wb.add_format({
                 'text_wrap': True,
-                'font_size': 16})
+                'font_size': 16,
+                'valign': 'vcenter'})
+        self.formatPotentialSkillsDescGW = self.wb.add_format({
+                'text_wrap': True,
+                'font_size': 16,
+                'valign': 'vcenter',
+                'color': colorGW})
+        self.formatPotentialSkillsDescG8 = self.wb.add_format({
+                'text_wrap': True,
+                'font_size': 16,
+                'valign': 'vcenter',
+                'color': colorG8})
         
     def writeGuide(self):
         for valk in self.data:
@@ -231,13 +242,18 @@ class Main():
                                   (self.formatPotentialSkills, ) * 2, 
                                   (8, 16), merged=(False, True))
         else:
+            self.nextRowWrite(('', rankData['rank-desc-gw']), 
+                                  (self.formatPotentialSkillsDescGW, ) * 2, 
+                                  (8, 16), merged=(False, True))
             rowEnd = self.currCellR
             
         self.ws.merge_range(rowStart, 0, rowEnd, 3, '')
         self.ws.merge_range(rowStart, 4, rowEnd, 7, '')  
         
     def addPotentialHeader(self):
-        self.nextRowWrite(('Rank', 'Priority', 'Description'), (self.formatPotentialHeader,) * 3, (4, 4, 16))
+        self.nextRowWrite(('Rank', 'Priority', 'Description'), 
+                          (self.formatPotentialHeader,) * 3, 
+                          (4, 4, 16))
                 
             
     def getSkillStr(self, skillJson):
