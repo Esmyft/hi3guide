@@ -1,0 +1,197 @@
+{
+  "valkyrieranger": {
+    "name": "Valkyrie Ranger",
+    "char": "Kiana",
+    
+    
+    "score-abyss-gw": "S",
+    "score-coop-gw": "C",
+    "score-arena-gw": "D",
+    
+    "score-abyss-g8": "B",
+    "score-coop-g8": "B",
+    "score-arena-g8": "B",
+    "score-story-g8": "B+",
+    
+    "score-damage-g8": "C",
+    "score-support-g8": "A",
+    "score-interrupt-g8": "A",
+    "score-difficulty-g8": "A",
+    
+    
+    "strengths": [
+      {
+        "title": "Triggers Energy Blackhole upon Ultimate Evasion",
+        "text-gw": "Makes AOE more effective and avoids being surrounded by enemies."
+      },
+      {
+        "title": "Shield breaker",
+        "text-gw": "Up to 60% increase to shield damage plus stun upon successful shield break."
+      },
+      {
+        "title": "Excellent support that provide more than just HP recovery",
+        "text-gw": "Provides large damage through black hole and shield break, access to bleeding and stun status effects. Giving her Water Fairy Form II or Mjollnir allows her to inflict status effects on enemies being affected by black hole and combos well with other valkyries."
+      },
+      {
+        "title": "Can deal damage from a distance",
+        "text-gw": "VR Kiana's basic attack is ranged, so it is possible to damage enemies from far. Even if distance is created due to evasion, damage can still be dealt to enemies."
+      }
+    ],
+    
+    "weaknesses": [
+      {
+        "title": "Lack of switch skill",
+        "text-gw": "Not always bad since no time is lost when switching her in."
+      },
+      {
+        "title": "Low damage",
+        "text-gw": "VR Kiana is mainly a support."
+      }
+    ],
+    
+    "potential": {
+      "S": {
+        "priority-g8": 3,
+        "skills": [
+          {
+            "skill-name": "Speed Up",
+            "skill-type": 0,
+            "skill-desc": "Increases whole team's Movement Speed by 25% and Mecha Characters' Attack Speed by 14%."
+          },
+          {
+            "skill-name": "Star Collapse",
+            "skill-type": 2,
+            "skill-desc": "Extends the duration of Energy Blackhole to 5.0 sec. Increases the suction range by 6.0 meters."
+          },
+          {
+            "skill-name": "Valkyrie Impulse",
+            "skill-type": 4,
+            "skill-desc": "Deals an additional 371 fire damage every time the Attack button is tapped (up to 15 times) when Ultimate is active."
+          },
+          {
+            "skill-name": "Blasting Bullet",
+            "skill-type": 5,
+            "skill-desc": "Combo attacks deal an additional 296 physical damage to the primary target."
+          }
+        ],
+        "rank-desc-gw": "Energy Blackhole enhanced at S rank: duration increased to 5 seconds, suction range increased to 6m. As the blackhole is drastically improved, S rank is highly recommended.\nNo need to farm beyond S rank if using her as support."
+      },
+      "SS": {
+        "priority-g8": 2,
+        "skills": [
+          {
+            "skill-name": "Critical Mastery",
+            "skill-type": 1
+          },
+          {
+            "skill-name": "Shooting Bolster",
+            "skill-type": 5
+          }
+        ],
+        "rank-desc-gw": ""
+      },
+      "SSS": {
+        "priority-g8": 1,
+        "skills": [
+          {
+            "skill-name": "Valkyrie Frenzy",
+            "skill-type": 4
+          }
+        ],
+        "rank-desc-gw": ""
+      }
+    },
+    "loadouts-premium": [
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "weapon": "Hyper Railguns",
+        "stigT": "Cleopatra (T)",
+        "stigM": "Cleopatra (M)",
+        "stigB": "Cleopatra (B)",
+        "desc-g8": "Cleopatra raises damage dealt to stunned shield broken enemies, therefore is compatible with VR Kiana. In addition, Hyper Railguns can cause paralysis with weapons skills, making Cleopatra's skills more useful."
+      },
+      {
+        "rating-gw": 3,
+        "rating-gw-max": 3,
+        "weapon": "Mjolnir",
+        "stigT": "Lier Scarlet (T)",
+        "stigM": "Cleopatra (M)",
+        "stigB": "Lier Scarlet (B)",
+        "desc-gw": "VR Kiana deals high damage to shields, and the enemies can be stunned by various means when the shield is destroyed. Impair enemies with Mjolnir to quickly destroy the shield and aim to maintain damage increase during stun. VR Kiana is equipped Lier Scarlet stigmata for durability as she plays a supportive role rather than an offensive one. Thanks to the 2 Set Bonus, she can endure long battles in the abyss."
+      },
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "rating-gw": 3,
+        "rating-gw-max": 3,
+        "weapon": "Mjolnir",
+        "stigT": "Lier Scarlet (T)",
+        "stigM": "Lier Scarlet (M)",
+        "stigB": "Kepler (B)",
+        "desc-gw": "Set focused on durability.  Reduce damage taken with 2 Set Bonus of Lier Scarlet and recover HP by dealing critical damage with Kepler (B). Recommended for challenging Abyss etc. where durability has priority.",
+        "desc-g8": "A set where Lier (T) enhances damage while Lier (M) and Kepler recovers HP. Since the 2 set bonus from Lier can reduce damage, this set is recommended for stages with where attacks are intense."
+      },
+      {
+        "rating-gw": 3,
+        "rating-gw-max": 3,
+        "weapon": "Water Spirit Type-II",
+        "stigT": "Any",
+        "stigM": "Siegfried (M)",
+        "stigB": "Any",
+        "desc-gw": "Recommended set for Dimension Breaker Bronya and Goushinnso Memento Sakura team composition.\nBy shortening the weapon skill cooldown with Siegfried (M), a chain attack of Energy Blackhole (VR Kiana) → Water Spirit Type-II weapon skill → Switch skill (DB Bronya) → Combo Skill (Meme Sakura) becomes possible."
+      },
+      {
+        "rating-gw": 2,
+        "rating-gw-max": 3,
+        "weapon": "Jingwei's Wings",
+        "stigT": "Jingwei (T)",
+        "stigM": "Jingwei (M)",
+        "stigB": "Jingwei (B)",
+        "desc-gw": "Attacking the same enemy increases CRT and CDMG. Also, the smaller the number of enemies. the better the set performs. A set suited for fighting bosses."
+      }
+    ],
+    "loadouts-discount": [
+      {
+        "rating-gw": 1,
+        "rating-gw-max": 3,
+        "weapon": [
+          "Colt Peacemaker",
+          "Water Spirit Type-II",
+          "Artemis' Guardian"
+          ],
+        "stigT": "Rowland (T)",
+        "stigM": "Theresa - Origins (M)",
+        "stigB": "Attila (B)",
+        "desc-gw": "A balanced set that balances firepower and durability. Theresa - Origins(M) shortens weapon skill cooldowns and is recommended for QTE support. Choose weapons according to QTE conditions."
+      },
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "weapon": "Artemis' Guardian",
+        "stigT": "Wang Zhaojun (T)",
+        "stigM": "Wang Zhaojun (M)",
+        "stigB": "Nikola Tesla (B)",
+        "desc-g8": "A set that strengthens damage done to stunned enemies using Nikola Tesla and ranged physical damage using the 2 Set Bonus of Wang Zhaojun. Wang Zhaojun can raise max HP and DEF so both offensive power and defensive power are improved.\nArtemis' Guardian contributes to VR Kiana's supportive role by inflicting Time Lock."
+      }
+    ],
+    "team-synergy": [
+      {
+        "valk-name": "Shadow Dash Mei",
+        "desc-gw": "VR Kiana can trigger her QTE by stunning. SD Mei benefits from VR Kiana's leader skill."
+      },
+      {
+        "valk-name": "Valkyrie Chariot Bronya",
+        "desc-gw": "By stunning enemies, VC Bronya's QTE can be triggered. As VC Bronya's QTE is very powerful, teaming up only to trigger her QTE is good enough."
+      },
+      {
+        "valk-name": "Goushinnso Memento Sakura",
+        "desc-g8": "Meme Sakura can deal tremendous amounts of damage thanks to paralysis and frozen statuses inflicted by weapon skills from VR Kiana."
+      },
+      {
+        "valk-name": "Dimension Breaker Bronya",
+        "desc-g8": "DB Bronya, together with VC Kiana, makes it easier to activate Meme Sakura's passive."
+      }
+    ]
+  }
+}
