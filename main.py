@@ -138,6 +138,23 @@ class Main():
                 'font_size': 16,
                 'valign': 'vcenter',
                 'color': colorG8})
+        self.formatSynergyName = self.wb.add_format({
+                'text_wrap': True,
+                'font_size': 16,
+                'valign': 'vcenter'
+                })
+        self.formatSynergyG8 = self.wb.add_format({
+                'text_wrap': True,
+                'color': colorG8,
+                'valign': 'vcenter',
+                'font_size': 16})
+        self.formatSynergyGW = self.wb.add_format({
+                'text_wrap': True,
+                'color': colorGW,
+                'valign': 'vcenter',
+                'font_size': 16})
+        self.formatSynergy = self.wb.add_format({
+                'text_wrap': True})
         
     def writeGuide(self):
         for valk in self.data:
@@ -166,6 +183,7 @@ class Main():
         self.addEmptyRow()
         self.writePotential()
         self.addEmptyRow()
+        self.writeSynergy()
         
     def addEmptyRow(self):
         self.nextRowWrite('', None)
@@ -223,6 +241,33 @@ class Main():
         for rank in self.currValkData['potential']:
             self.addPotentialRank(rank, self.currValkData['potential'][rank])
             
+    def writeSynergy(self):
+        self.nextRowWrite('Team Synergy',self.formatTitle)
+        for teammate in self.currValkData['team-synergy']:
+            richString = self.teamSynergyToRichString(teammate)
+            self.nextRowWrite(richString, 
+                              (self.formatSynergyName, self.formatSynergy) , 
+                              (8, 16), merged=True)
+            
+    def teamSynergyToRichString(self, teamData):
+        richString = tuple()
+        richString += ((self.formatInfo, teamData['valk-name']),)
+        
+        descString = tuple()
+        
+        if 'desc-gw' in teamData:
+            descString += (self.formatSynergyGW, 
+                           teamData['desc-gw'])
+        if 'desc-gw' in teamData and 'desc-g8' in teamData:
+            descString += (self.formatSynergyGW, '\n',)
+        if 'desc-g8' in teamData:
+            descString += (self.formatSynergyG8, 
+                           teamData['desc-g8'])
+        richString += (descString, )
+        return richString
+        
+        
+    
     def addPotentialRank(self, rank, rankData):
         isFirst = True
         
