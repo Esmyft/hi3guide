@@ -88,7 +88,7 @@
             "skill-type": 5
           }
         ],
-        "rank-desc-gw": ""
+        "rank-desc-gw": "-"
       },
       "SSS": {
         "priority-g8": 1,
@@ -98,7 +98,7 @@
             "skill-type": 4
           }
         ],
-        "rank-desc-gw": ""
+        "rank-desc-gw": "-"
       }
     },
     "loadouts-premium": [
