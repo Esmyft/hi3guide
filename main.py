@@ -12,8 +12,8 @@ class Main():
     def __init__(self):
         self.wb = None
         self.ws = None
-        self.currCellR = -1
-        self.currCellC = 0
+        self.currCellR = 0
+        self.currCellC = 1
     
         self.data = None
         self.currValkData = None
@@ -167,9 +167,10 @@ class Main():
             self.currValkData = self.data[valk]
             self.initializeWorksheet()
             self.writeCharGuide()
+            self.fillTypeColor()
             
     def initializeWorksheet(self):
-        self.ws.set_column(0, 23, 3.5)
+        self.ws.set_column(0, 25, 3.5)
         self.ws.hide_gridlines(2)
         self.ws.name = self.currValkData['name'] + ' ' + self.currValkData['char'] 
         
@@ -255,6 +256,20 @@ class Main():
                               (self.formatSynergyName, self.formatSynergy) , 
                               (8, 16), merged=True)
             
+    def fillTypeColor(self):
+        colors = ['#c8f8fd', 'orange', 'purple']
+        color = colors[self.currValkData['type']]
+        cell_format = self.wb.add_format()
+        cell_format.set_bg_color(color)
+        for i in range(self.currCellR + 2):
+            if i == 0 or i == self.currCellR + 1:
+                for j in range(26):
+                    self.ws.write(i, j, '', cell_format)
+            else:
+                self.ws.write(i, 0, '', cell_format)
+                self.ws.write(i, 25, '', cell_format)
+             
+            
     def teamSynergyToRichString(self, teamData):
         richString = tuple()
         richString += ((self.formatInfo, teamData['valk-name']),)
@@ -298,8 +313,8 @@ class Main():
                                   (8, 16), merged=(False, True))
             rowEnd = self.currCellR
             
-        self.ws.merge_range(rowStart, 0, rowEnd, 3, '')
-        self.ws.merge_range(rowStart, 4, rowEnd, 7, '')  
+        self.ws.merge_range(rowStart, 1, rowEnd, 4, '')
+        self.ws.merge_range(rowStart, 5, rowEnd, 8, '')  
         
     def addPotentialHeader(self):
         self.nextRowWrite(('Rank', 'Priority', 'Description'), 
@@ -432,7 +447,7 @@ class Main():
             return item.count('\n')
         
         self.currCellR += 1
-        self.currCellC = 0
+        self.currCellC = 1
         maxNumLines = 0
         maxRowHeight = 0
         

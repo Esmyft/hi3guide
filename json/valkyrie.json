@@ -2,7 +2,7 @@
   "valkyrieranger": {
     "name": "Valkyrie Ranger",
     "char": "Kiana",
-    
+    "type": 0,
     
     "score-abyss-gw": "S",
     "score-coop-gw": "C",
