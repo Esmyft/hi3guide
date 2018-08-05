@@ -55,106 +55,111 @@ class Main():
     def initializeWorkbook(self):
         colorG8 = '#E34234'
         colorGW = '#1B4D3E'
+        titleFontSize = 20
+        infoFontSize = 16
         
         self.formatTopTitle = self.wb.add_format({
                 'align': 'center_across',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatTitle = self.wb.add_format({
                 'align': 'center_across',
-                'font_size': 16})
+                'font_size': titleFontSize,
+                'bold': True})
         self.formatSection = self.wb.add_format({
                 'align': 'center',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatSubsection = self.wb.add_format({
                 'align': 'center',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatInfo = self.wb.add_format({
                 #'align': 'center_across',
                 'text_wrap': True,
                 'valign': 'vcenter',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatStat = self.wb.add_format({
                 'align': 'center_across',
                 'text_wrap': True,
                 'valign': 'vcenter',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatInfoG8 = self.wb.add_format({
                 'color': colorG8,
                 'valign': 'vcenter',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatInfoGW = self.wb.add_format({
                 'color': colorGW,
                 'valign': 'vcenter',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatInfoTitle = self.wb.add_format({
                 'bold': True,
                 'align': 'justify',
                 'valign': 'vcenter',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatEquipment = self.wb.add_format({
                 'align': 'center_across',
                 'text_wrap': True,
                 'valign': 'vcenter',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatEquipmentGW = self.wb.add_format({
                 'align': 'center_across',
                 'text_wrap': True,
                 'valign': 'vcenter',
                 'color': colorGW,
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatEquipmentG8 = self.wb.add_format({
                 'align': 'center_across',
                 'text_wrap': True,
                 'valign': 'vcenter',
                 'color': colorG8,
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatSkillType = self.wb.add_format({
                 'text_wrap': True,
                 'bold': True,
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatPotentialHeader = self.wb.add_format({
                 'align': 'center_across',
                 'text_wrap': True,
                 'bold': True,
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatPotentialRank = self.wb.add_format({
                 'align': 'center',
                 'valign': 'vcenter',
                 'text_wrap': True,
                 'bold': True,
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatPotentialStar = self.formatPotentialRank
         self.formatPotentialSkills = self.wb.add_format({
                 'text_wrap': True,
-                'font_size': 16,
+                'font_size': infoFontSize,
                 'valign': 'vcenter'})
         self.formatPotentialSkillsDescGW = self.wb.add_format({
                 'text_wrap': True,
-                'font_size': 16,
+                'font_size': infoFontSize,
                 'valign': 'vcenter',
                 'color': colorGW})
         self.formatPotentialSkillsDescG8 = self.wb.add_format({
                 'text_wrap': True,
-                'font_size': 16,
+                'font_size': infoFontSize,
                 'valign': 'vcenter',
                 'color': colorG8})
         self.formatSynergyName = self.wb.add_format({
                 'text_wrap': True,
-                'font_size': 16,
-                'valign': 'vcenter'
+                'font_size': infoFontSize,
+                'valign': 'vcenter',
+                'align': 'center'
                 })
         self.formatSynergyG8 = self.wb.add_format({
                 'text_wrap': True,
                 'color': colorG8,
                 'valign': 'vcenter',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatSynergyGW = self.wb.add_format({
                 'text_wrap': True,
                 'color': colorGW,
                 'valign': 'vcenter',
-                'font_size': 16})
+                'font_size': infoFontSize})
         self.formatSynergy = self.wb.add_format({
-                'text_wrap': True})
+                'text_wrap': True,
+                'font_size': infoFontSize})
         
     def writeGuide(self):
         for valk in self.data:
@@ -186,10 +191,11 @@ class Main():
         self.writeSynergy()
         
     def addEmptyRow(self):
-        self.nextRowWrite('', None)
+        self.nextRowWrite('', self.formatInfo)
         
     def writeName(self):
-        self.nextRowWrite(self.currValkData['name'] + ' ' + self.currValkData['char'], self.formatTitle)
+        self.nextRowWrite(self.currValkData['name'] + ' ' + self.currValkData['char'], 
+                          self.formatTitle)
         
     def writeScore(self):
         self.nextRowWrite("Score", self.formatTitle)
@@ -428,6 +434,7 @@ class Main():
         self.currCellR += 1
         self.currCellC = 0
         maxNumLines = 0
+        maxRowHeight = 0
         
         if type(strings) == str or self.isRichString(strings):
             strings = (strings,)
@@ -437,6 +444,11 @@ class Main():
             merged = (merged, ) * len(strings)
             
         for i, string in enumerate(strings):
+            if styles[i] is None:
+                fontSize = 16
+            else:
+                fontSize = styles[i].font_size
+                
             if merged[i]:
                 self.ws.merge_range(self.currCellR, self.currCellC, 
                                     self.currCellR, self.currCellC + spaces[i] - 1,
@@ -459,6 +471,7 @@ class Main():
                     self.ws.write(self.currCellR, self.currCellC, splittedStr)
                     
             maxNumLines = max(maxNumLines, numLines)
+            maxRowHeight = max(maxRowHeight, numLines * 25 * fontSize / 16)
                     
             if not merged[i] and styles[i] is not None:
                 for j in range(1, spaces[i]):
@@ -466,7 +479,7 @@ class Main():
             
             self.currCellC += spaces[i]
             
-        self.ws.set_row(self.currCellR, maxNumLines * 25)
+        self.ws.set_row(self.currCellR, maxRowHeight)
                            
                 
     def isRichString(self, richString):
