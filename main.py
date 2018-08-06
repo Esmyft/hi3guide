@@ -1,6 +1,7 @@
 from collections import OrderedDict, deque
 import json
-from PIL import ImageFont
+from PIL import ImageFont, Image
+import re
 
 import xlsxwriter as xw
 
@@ -14,12 +15,15 @@ class Main():
         self.ws = None
         self.currCellR = 0
         self.currCellC = 1
+        self.defaultCellWidth = 3.5
     
         self.data = None
         self.currValkData = None
         
         ## Use font Calibri, fontsize 11
         self.font = ImageFont.truetype('calibri.ttf', size=16)
+        ## First row height is 15 pts, the default in Excel
+        self.rowHeights = [15]
         
         
     def run(self, initAsXlsm=True):
@@ -34,10 +38,6 @@ class Main():
         global data
         with open(VALKYRIE_DATA_PATH, 'r', encoding='utf-8') as jsonFile:
             self.data = json.load(jsonFile, object_hook=OrderedDict)
-# =============================================================================
-#             self.data = (json.JSONDecoder(object_pairs_hook=OrderedDict)
-#                             .decode(jsonFile.read()))
-# =============================================================================
     
         data = self.data 
         
@@ -64,7 +64,8 @@ class Main():
         self.formatTitle = self.wb.add_format({
                 'align': 'center_across',
                 'font_size': titleFontSize,
-                'bold': True})
+                'bold': True,
+                'valign': 'vcenter'})
         self.formatSection = self.wb.add_format({
                 'align': 'center',
                 'font_size': infoFontSize})
@@ -111,6 +112,10 @@ class Main():
                 'valign': 'vcenter',
                 'color': colorG8,
                 'font_size': infoFontSize})
+        self.formatEquipmentInfo = self.wb.add_format({
+                'text_wrap': True,
+                'font_size': infoFontSize,
+                'valign': 'top'})
         self.formatSkillType = self.wb.add_format({
                 'text_wrap': True,
                 'bold': True,
@@ -170,13 +175,14 @@ class Main():
             self.fillTypeColor()
             
     def initializeWorksheet(self):
-        self.ws.set_column(0, 25, 3.5)
+        self.ws.set_column(0, 25, self.defaultCellWidth)
         self.ws.hide_gridlines(2)
         self.ws.name = self.currValkData['name'] + ' ' + self.currValkData['char'] 
         
     def writeCharGuide(self):
         self.writeName()
         self.addEmptyRow()
+        self.addValkAvatar()
         self.writeScore()
         self.addEmptyRow()
         self.writeStrengths()
@@ -196,7 +202,14 @@ class Main():
         
     def writeName(self):
         self.nextRowWrite(self.currValkData['name'] + ' ' + self.currValkData['char'], 
-                          self.formatTitle)
+                          self.formatTitle, rowHeight=68)
+        
+    def addValkAvatar(self):
+        valkName = self.currValkData['name']
+        valkName = re.sub(r'\W+', '', valkName)
+        
+        IMG_DIR = 'img/valkyrie/' + valkName + '.png'
+        self.addImage(1, 2, 2, 6, IMG_DIR)
         
     def writeScore(self):
         self.nextRowWrite("Score", self.formatTitle)
@@ -236,11 +249,13 @@ class Main():
         self.nextRowWrite("Recommended Premium Sets", self.formatTitle)
         for loadout in self.currValkData['loadouts-premium']:
             self.addLoadout(loadout)
+            self.addEmptyRow()
         
     def writeDiscountLoadout(self):
         self.nextRowWrite("Recommended Discount Sets", self.formatTitle)
         for loadout in self.currValkData['loadouts-discount']:
             self.addLoadout(loadout)
+            self.addEmptyRow()
     
     def writePotential(self):
         self.nextRowWrite('Potential', self.formatTitle)
@@ -343,39 +358,72 @@ class Main():
         return richString            
             
     def addLoadout(self, loadout):
-        loadoutScore = self.loadoutScoreToRichString(loadout)
-        if type(loadout['weapon']) == str:
-            weaponText = loadout['weapon']
-        else:
-            weaponText = loadout['weapon'][0]
-            for weapon in loadout['weapon'][1:]:
-                weaponText += '\n' + weapon
-        if type(loadout['stigT']) == str:
-            stigTText = loadout['stigT']
-        else:
-            stigTText = loadout['stigT'][0]
-            for stigT in loadout['stigT'][1:]:
-                stigTText += '\n' + stigT
-                
-        if type(loadout['stigM']) == str:
-            stigMText = loadout['stigM']
-        else:
-            stigMText = loadout['stigM'][0]
-            for stigM in loadout['stigM'][1:]:
-                stigMText += '\n' + stigM
-        if type(loadout['stigB']) == str:
-            stigBText = loadout['stigB']
-        else:
-            stigBText = loadout['stigB'][0]
-            for stigB in loadout['stigB'][1:]:
-                stigBText += '\n' + stigB
-        
-        self.nextRowWrite((loadoutScore, weaponText, stigTText, stigMText, 
-                           stigBText), (self.formatEquipment,) * 5, (4, 5, 5, 5, 5)) 
-
+        loadoutGrade = self.loadoutScoreToRichString(loadout)
         richDescStr, numLines = self.getLoadoutDesc(loadout)
-        self.nextRowWrite(richDescStr, self.formatInfo, merged=True)
-        #self.ws.set_row(self.currCellR, numLines * 25)
+        
+        self.nextRowWrite(loadoutGrade, self.formatEquipment)
+        
+        weaponDir = 'img/weapon/'
+        stigmataDir = 'img/stigmata/'
+        descRowStart = self.currCellR + 1
+        rowHeight = 80
+        
+        if type(loadout['weapon']) is str:
+            weapons = (loadout['weapon'],)
+        else:
+            weapons = loadout['weapon']
+            
+        for weapon in weapons:
+            self.nextRowWrite(('', weapon),
+                              (self.formatEquipment,) * 3,
+                              (4, 4), rowHeight=rowHeight)
+            weapon = re.sub(r'[^\w+\(\)]', '', weapon)
+            self.addImage(self.currCellR, 1, self.currCellR, 4,
+                              weaponDir + weapon + '.png')
+                
+        if type(loadout['stigT']) is str:
+            stigTs = (loadout['stigT'],)
+        else:
+            stigTs = loadout['stigT']
+
+        for stigT in stigTs:
+            self.nextRowWrite(('', stigT),
+                               (self.formatEquipment,) * 3,
+                               (4, 4), rowHeight=rowHeight)
+            stigT = re.sub(r'[^\w+\(\)]', '', stigT)
+            self.addImage(self.currCellR, 1, self.currCellR, 4, 
+                          stigmataDir + stigT + '.png')
+            
+        if type(loadout['stigM']) is str:
+            stigMs = (loadout['stigM'],)
+        else:
+            stigMs = loadout['stigM']
+
+        for stigM in stigMs:
+            self.nextRowWrite(('', stigM),
+                               (self.formatEquipment,) * 3,
+                               (4, 4), rowHeight=rowHeight)
+            stigM = re.sub(r'[^\w+\(\)]', '', stigM)
+            self.addImage(self.currCellR, 1, self.currCellR, 4, 
+                          stigmataDir + stigM + '.png')
+            
+        if type(loadout['stigB']) is str:
+            stigBs = (loadout['stigB'],)
+        else:
+            stigBs = loadout['stigB']
+
+        for stigB in stigBs:
+            self.nextRowWrite(('', stigB),
+                               (self.formatEquipment,) * 3,
+                               (4, 4), rowHeight=rowHeight)
+            stigB = re.sub(r'[^\w+\(\)]', '', stigB)
+            self.addImage(self.currCellR, 1, self.currCellR, 4, 
+                          stigmataDir + stigB + '.png')
+        
+        descRowEnd = self.currCellR
+        self.ws.merge_range(descRowStart, 9, descRowEnd, 24, '')
+        self.ws.write_rich_string(descRowStart, 9, *richDescStr, 
+                                  self.formatEquipmentInfo)
         
     def getLoadoutDesc(self, loadout):
         lineCount = 0
@@ -399,7 +447,7 @@ class Main():
         if 'rating-gw' in loadout and 'rating-g8' in loadout:
             richString += (self.formatEquipment, '\n')
         if 'rating-g8' in loadout:
-            richString += (self.formatEquipmentG8, "G8")
+            richString += (self.formatEquipmentG8, "❤︎")
         return richString            
         
             
@@ -423,8 +471,47 @@ class Main():
             self.nextRowWrite(richString, self.formatInfo, merged=True)
             #self.ws.set_row(self.currCellR, (len(lines) + 1) * 25)
             
+    def addImage(self, row1, col1, row2, col2, imgDir, autoscale=True, center=True, vcenter=True):
+        # pixel to point ratio is 1.333 for height and 8.403 for width. May
+        # depend on font.
+        rangeHeight = sum(self.rowHeights[row1:row2+1]) * 1.333
+        rangeWidth = (col2 - col1 + 1) * self.defaultCellWidth * 8.403
+        
+        img = Image.open(imgDir)
+        imgWidth, imgHeight = img.size
+        
+        heightRatio = rangeHeight / imgHeight
+        widthRatio = rangeWidth / imgWidth
+        
+        if autoscale:
+            scale = min(heightRatio, widthRatio)
+        else:
+            scale = 1
+            
+        if center:
+            xOffset = (rangeWidth - imgWidth * scale) / 2
+        else:
+            xOffset = 0
+        
+        if vcenter:
+            yOffset = (rangeHeight - imgHeight * scale) / 2
+        else:
+            yOffset = 0
+            
+        options = {
+                    'x_offset':    xOffset,
+                    'y_offset':    yOffset,
+                    'x_scale':     scale,
+                    'y_scale':     scale,
+                    'positioning': 1
+                    }
+        self.ws.insert_image(row1, col1, imgDir,
+                             options)
+        
+        
+        
     
-    def nextRowWrite(self, strings, styles, spaces=(24,), merged=False):
+    def nextRowWrite(self, strings, styles, spaces=(24,), merged=False, rowHeight=None):
         '''
         Writes the value(s) of the next row. Can take in raw string, a tuple 
         of strings, rich strings in the form of a tuple, or a tuple of 
@@ -484,17 +571,22 @@ class Main():
                     self.ws.write(self.currCellR, self.currCellC, splittedStr, styles[i])
                 else:
                     self.ws.write(self.currCellR, self.currCellC, splittedStr)
-                    
-            maxNumLines = max(maxNumLines, numLines)
-            maxRowHeight = max(maxRowHeight, numLines * 25 * fontSize / 16)
-                    
+            
             if not merged[i] and styles[i] is not None:
                 for j in range(1, spaces[i]):
                     self.ws.write(self.currCellR, self.currCellC + j, '', styles[i]) 
+                    
+            if rowHeight is None:
+                maxNumLines = max(maxNumLines, numLines)
+                maxRowHeight = max(maxRowHeight, numLines * 25 * fontSize / 16)
+            
+            else:
+                maxRowHeight = rowHeight
             
             self.currCellC += spaces[i]
             
         self.ws.set_row(self.currCellR, maxRowHeight)
+        self.rowHeights.append(maxRowHeight)
                            
                 
     def isRichString(self, richString):
