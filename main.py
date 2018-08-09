@@ -23,7 +23,6 @@ class Main():
         ## Use font Calibri, fontsize 11
         self.font = ImageFont.truetype('calibri.ttf', size=16)
         ## First row height is 15 pts, the default in Excel
-        self.rowHeights = [15]
         
         
     def run(self, initAsXlsm=True):
@@ -97,6 +96,7 @@ class Main():
                 'font_size': infoFontSize})
         self.formatEquipment = self.wb.add_format({
                 'align': 'center_across',
+                'bold': True,
                 'text_wrap': True,
                 'valign': 'vcenter',
                 'font_size': infoFontSize})
@@ -115,7 +115,7 @@ class Main():
         self.formatEquipmentInfo = self.wb.add_format({
                 'text_wrap': True,
                 'font_size': infoFontSize,
-                'valign': 'top'})
+                'valign': 'vcenter'})
         self.formatSkillType = self.wb.add_format({
                 'text_wrap': True,
                 'bold': True,
@@ -150,7 +150,8 @@ class Main():
                 'text_wrap': True,
                 'font_size': infoFontSize,
                 'valign': 'vcenter',
-                'align': 'center'
+                'align': 'center',
+                'bold': True
                 })
         self.formatSynergyG8 = self.wb.add_format({
                 'text_wrap': True,
@@ -163,11 +164,20 @@ class Main():
                 'valign': 'vcenter',
                 'font_size': infoFontSize})
         self.formatSynergy = self.wb.add_format({
+                'align': 'center_across',
                 'text_wrap': True,
-                'font_size': infoFontSize})
+                'font_size': infoFontSize,
+                'valign': 'vcenter'})
+        self.formatSynergyDesc = self.wb.add_format({
+                'text_wrap': True,
+                'font_size': infoFontSize,
+                'valign': 'vcenter'})
         
     def writeGuide(self):
         for valk in self.data:
+            self.currCellR = 0
+            self.currCellC = 1
+            self.rowHeights = [15]
             self.ws = self.wb.add_worksheet()
             self.currValkData = self.data[valk]
             self.initializeWorksheet()
@@ -202,7 +212,7 @@ class Main():
         
     def writeName(self):
         self.nextRowWrite(self.currValkData['name'] + ' ' + self.currValkData['char'], 
-                          self.formatTitle, rowHeight=68)
+                          self.formatTitle, minRowHeight=68)
         
     def addValkAvatar(self):
         valkName = self.currValkData['name']
@@ -264,12 +274,18 @@ class Main():
             self.addPotentialRank(rank, self.currValkData['potential'][rank])
             
     def writeSynergy(self):
+        valkDir = 'img/valkyrie/'
         self.nextRowWrite('Team Synergy',self.formatTitle)
         for teammate in self.currValkData['team-synergy']:
             richString = self.teamSynergyToRichString(teammate)
             self.nextRowWrite(richString, 
-                              (self.formatSynergyName, self.formatSynergy) , 
-                              (8, 16), merged=True)
+                              (self.formatInfo, self.formatSynergy, self.formatSynergyDesc), 
+                              (3, 6, 15), merged=True, minRowHeight=67.5)
+            
+            valkName = teammate['valk-name']
+            valkName = re.sub(r'[^\w+\(\)]', '', valkName)
+            self.addImage(self.currCellR, 1, self.currCellR, 3, 
+                          valkDir + valkName + '_c.png')
             
     def fillTypeColor(self):
         colors = ['#c8f8fd', 'orange', 'purple']
@@ -286,8 +302,8 @@ class Main():
              
             
     def teamSynergyToRichString(self, teamData):
-        richString = tuple()
-        richString += ((self.formatInfo, teamData['valk-name']),)
+        richString = ('',)
+        richString += ((self.formatSynergyName, teamData['valk-name']),)
         
         descString = tuple()
         
@@ -299,7 +315,7 @@ class Main():
         if 'desc-g8' in teamData:
             descString += (self.formatSynergyG8, 
                            teamData['desc-g8'])
-        richString += (descString, )
+        richString += (descString,)
         return richString
         
         
@@ -329,7 +345,10 @@ class Main():
             rowEnd = self.currCellR
             
         self.ws.merge_range(rowStart, 1, rowEnd, 4, '')
-        self.ws.merge_range(rowStart, 5, rowEnd, 8, '')  
+        self.ws.merge_range(rowStart, 5, rowEnd, 8, '')
+        
+        rankDir = 'img/rank/'
+        self.addImage(rowStart, 2, rowEnd, 3, rankDir + rank + '.png', center=False)
         
     def addPotentialHeader(self):
         self.nextRowWrite(('Rank', 'Priority', 'Description'), 
@@ -350,7 +369,7 @@ class Main():
                            (fullStar * rankData['priority-gw'] + 
                            emptyStar * (3 - rankData['priority-gw'])))
         if 'priority-gw' in rankData and 'priority-g8' in rankData:
-            richString += (self.formatEquipment, '\n')
+            richString += (('\n'),)
         if 'priority-g8' in rankData:
             richString += (self.formatEquipmentG8, 
                            (fullStar * rankData['priority-g8'] + 
@@ -361,7 +380,9 @@ class Main():
         loadoutGrade = self.loadoutScoreToRichString(loadout)
         richDescStr, numLines = self.getLoadoutDesc(loadout)
         
-        self.nextRowWrite(loadoutGrade, self.formatEquipment)
+        self.nextRowWrite((loadoutGrade, 'Description'), 
+                          (self.formatEquipment, ) * 2,
+                          (8, 16))
         
         weaponDir = 'img/weapon/'
         stigmataDir = 'img/stigmata/'
@@ -376,7 +397,7 @@ class Main():
         for weapon in weapons:
             self.nextRowWrite(('', weapon),
                               (self.formatEquipment,) * 3,
-                              (4, 4), rowHeight=rowHeight)
+                              (4, 4), minRowHeight=rowHeight)
             weapon = re.sub(r'[^\w+\(\)]', '', weapon)
             self.addImage(self.currCellR, 1, self.currCellR, 4,
                               weaponDir + weapon + '.png')
@@ -389,7 +410,7 @@ class Main():
         for stigT in stigTs:
             self.nextRowWrite(('', stigT),
                                (self.formatEquipment,) * 3,
-                               (4, 4), rowHeight=rowHeight)
+                               (4, 4), minRowHeight=rowHeight)
             stigT = re.sub(r'[^\w+\(\)]', '', stigT)
             self.addImage(self.currCellR, 1, self.currCellR, 4, 
                           stigmataDir + stigT + '.png')
@@ -402,7 +423,7 @@ class Main():
         for stigM in stigMs:
             self.nextRowWrite(('', stigM),
                                (self.formatEquipment,) * 3,
-                               (4, 4), rowHeight=rowHeight)
+                               (4, 4), minRowHeight=rowHeight)
             stigM = re.sub(r'[^\w+\(\)]', '', stigM)
             self.addImage(self.currCellR, 1, self.currCellR, 4, 
                           stigmataDir + stigM + '.png')
@@ -415,7 +436,7 @@ class Main():
         for stigB in stigBs:
             self.nextRowWrite(('', stigB),
                                (self.formatEquipment,) * 3,
-                               (4, 4), rowHeight=rowHeight)
+                               (4, 4), minRowHeight=rowHeight)
             stigB = re.sub(r'[^\w+\(\)]', '', stigB)
             self.addImage(self.currCellR, 1, self.currCellR, 4, 
                           stigmataDir + stigB + '.png')
@@ -511,7 +532,7 @@ class Main():
         
         
     
-    def nextRowWrite(self, strings, styles, spaces=(24,), merged=False, rowHeight=None):
+    def nextRowWrite(self, strings, styles, spaces=(24,), merged=False, minRowHeight=None):
         '''
         Writes the value(s) of the next row. Can take in raw string, a tuple 
         of strings, rich strings in the form of a tuple, or a tuple of 
@@ -576,12 +597,12 @@ class Main():
                 for j in range(1, spaces[i]):
                     self.ws.write(self.currCellR, self.currCellC + j, '', styles[i]) 
                     
-            if rowHeight is None:
-                maxNumLines = max(maxNumLines, numLines)
-                maxRowHeight = max(maxRowHeight, numLines * 25 * fontSize / 16)
             
-            else:
-                maxRowHeight = rowHeight
+            maxNumLines = max(maxNumLines, numLines)
+            maxRowHeight = max(maxRowHeight, numLines * 25 * fontSize / 16)
+            
+            if minRowHeight is not None:
+                maxRowHeight = max(minRowHeight, maxRowHeight) 
             
             self.currCellC += spaces[i]
             
