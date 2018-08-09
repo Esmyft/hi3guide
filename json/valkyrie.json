@@ -1,5 +1,5 @@
 {
-  "valkyrieranger": {
+  "ValkyrieRanger": {
     "name": "Valkyrie Ranger",
     "char": "Kiana",
     "type": 0,
@@ -30,7 +30,7 @@
       },
       {
         "title": "Excellent support that provide more than just HP recovery",
-        "text-gw": "Provides large damage through black hole and shield break, access to bleeding and stun status effects. Giving her Water Fairy Form II or Mjollnir allows her to inflict status effects on enemies being affected by black hole and combos well with other valkyries."
+        "text-gw": "Provides large damage through black hole and shield break, access to bleeding and stun status effects. Giving her Water Spirit Type-II or Mjolnir allows her to inflict status effects on enemies being affected by black hole and combos well with other valkyries."
       },
       {
         "title": "Can deal damage from a distance",
@@ -177,20 +177,247 @@
     ],
     "team-synergy": [
       {
-        "valk-name": "Shadow Dash Mei",
+        "valk-name": "Shadow Dash",
+        "valk-char": "Mei",
         "desc-gw": "VR Kiana can trigger her QTE by stunning. SD Mei benefits from VR Kiana's leader skill."
       },
       {
-        "valk-name": "Valkyrie Chariot Bronya",
+        "valk-name": "Valkyrie Chariot",
+        "valk-char": "Bronya",
         "desc-gw": "By stunning enemies, VC Bronya's QTE can be triggered. As VC Bronya's QTE is very powerful, teaming up only to trigger her QTE is good enough."
       },
       {
-        "valk-name": "Goushinnso Memento Sakura",
+        "valk-name": "Goushinnso Memento",
+        "valk-char": "Sakura",
         "desc-g8": "Meme Sakura can deal tremendous amounts of damage thanks to paralysis and frozen statuses inflicted by weapon skills from VR Kiana."
       },
       {
-        "valk-name": "Dimension Breaker Bronya",
+        "valk-name": "Dimension Breaker",
+        "valk-char": "Bronya",
         "desc-g8": "DB Bronya, together with VC Kiana, makes it easier to activate Meme Sakura's passive."
+      }
+    ]
+  },
+
+  "DivinePrayer": {
+    "name": "Divine Prayer",
+    "char": "Kiana",
+    "type": 2,
+    
+    "score-abyss-gw": "S",
+    "score-coop-gw": "S",
+    "score-arena-gw": "S",
+    
+    "score-abyss-g8": "A",
+    "score-coop-g8": "A-",
+    "score-arena-g8": "B+",
+    "score-story-g8": "A",
+    
+    "score-damage-g8": "B",
+    "score-support-g8": "S",
+    "score-interrupt-g8": "C+",
+    "score-difficulty-g8": "S",
+    
+    
+    "strengths": [
+      {
+        "title": "HP recovery specialist!",
+        "text-gw": "Due to the numerous ways of recovering HP, team stability is greatly improved. This is especially true in the Infinite Abyss where HP is slowly lost."
+      },
+      {
+        "title": "Inflicts various status effects",
+        "text-gw": "DP Kiana alone can inflict various status effects, which can trigger QTE of other valkyries. Equipping a weapon that can inflict other status effects further improves her coverage."
+      },
+      {
+        "title": "Prevents teammates from dying",
+        "text-gw": "At SSS Rank, DP Kiana's passive allows her to switch out a dying team member and recovery HP once. While the road to SSS Rank is long, it is worthwhile for learning the passive skill."
+      },
+      {
+        "title": "Synergetic with many other valkyries in co-op",
+        "text-gw": "Great compatibility with Knight Moonbeam Kiana's team skill that can greatly increases CRT and CDMG during Time Fracture since DP Kiana can maintain Time Fracture for a long time.\nIn addition, with the team skill of Valkyrie Chariot Bronya, the SP of the valkyrie that is within range will recover continuously. Together, DP Kiana can channel her ultimate for a longer time. "
+      },
+      {
+        "title": "Contributes without being on the field",
+        "text-gw": "While not on field, it is possible to lower enemy's DEF by up to 80% while dealing lightning damage to enemies every 10 seconds by passive skill effect. That one can contribute to the team's damage while waiting for one's turn is appealing."
+      }
+      
+    ],
+    
+    "weaknesses": [
+      {
+        "title": "Strong in one-on-one battles, but lacking in burst damage",
+        "text-gw": "Inflicting Time Lock via Ultimate Evasion and Time Fracture via Ultimate skill can restrain enemies for a long time. DP Kiana can shave the enemy's HP while keeping herself safe, but her burst damage is not high."
+      }
+    ],
+    
+    "potential": {
+      "S": {
+        "priority-g8": 3,
+        "priority-gw": 3,
+        "skills": [
+          {
+            "skill-name": "Nebula Protection",
+            "skill-type": 0,
+            "skill-desc": "Increases whole team's Movement Speed by 25% and Mecha Characters' Attack Speed by 14%."
+          },
+          {
+            "skill-name": "Divine Light",
+            "skill-type": 1,
+            "skill-desc": "Extends the duration of Energy Blackhole to 5.0 sec. Increases the suction range by 6.0 meters."
+          },
+          {
+            "skill-name": "Time Blink",
+            "skill-type": 2
+          },
+          {
+            "skill-name": "Implosion",
+            "skill-type": 5
+          }
+        ],
+        "rank-desc-gw": "At the S rank, it becomes possible to activate Ultimate Evasion twice consecutively, alongside with a cooldown decrease. Since it becomes easier to inflict Time Fracture, S rank is a priority."
+      },
+      "SS": {
+        "priority-g8": 2,
+        "priority-gw": 2,
+        "skills": [
+          {
+            "skill-name": "Weihwasser",
+            "skill-type": 4
+          },
+          {
+            "skill-name": "Song of Alacrity",
+            "skill-type": 4
+          }
+        ],
+        "rank-desc-gw": "A portion of HP can be recovered instantaneously on the activation of the Ultimate skill. Even if the Ultimate skill is activated with less SP, having a guarenteed amount of HP recovered is valuable.\nWhile channeling the Ultimate skill, all team members have increased movement speed and attack speed. It is recommended to battle by switching to Bronya etc., where the benefit of increasing the attack speed is large because DP Kiana's Ultimate persists even if other valkyries are switched in."
+      },
+      "SSS": {
+        "priority-g8": 2,
+        "priority-gw": 2,
+        "skills": [
+          {
+            "skill-name": "Blazing Star",
+            "skill-type": 1
+          }
+        ],
+        "rank-desc-gw": "Although it is only once each quest, DP Kiana can recover HP and prevent death of members. While it is not essential, it doesn't hurt to have it in one's arsenal of skills, so one can obtain it with getting DP Kiana to SSS Rank being the main aim. "
+      }
+    },
+    "loadouts-premium": [
+      {
+        "rating-gw": 5,
+        "rating-gw-max": 5,
+        "weapon": [
+          "2nd Sacred Relic", 
+          "Mjolnir"
+        ],
+        "stigT": "Dark Jixuanyuan (T)",
+        "stigM": "Dark Jixuanyuan (M)",
+        "stigB": "Schrodinger Band (B)",
+        "desc-gw": "Black Jixuanyuan 2 Set Bonus and Schrodinger Band speeds up SP acquisition to activate the Ultimate skill, triggering HP recovery and inflicting Time Fracture. If the 2nd Sacred Relic is equipped, the SP acquisition rate is further increased.\nThe increased duration of Time Fracture from the Ultimate and the Black Jixuanyuan's skill that increases damage during Time Fracture works very well together."
+      },
+      {
+        "rating-gw": 5,
+        "rating-gw-max": 5,
+        "weapon": [
+          "2nd Sacred Relic", 
+          "Mjolnir",
+          "Judgement of Shamash"
+        ],
+        "stigT": "Zhuge Kongming (T)",
+        "stigM": "Dark Jixuanyuan (M)",
+        "stigB": "Dark Jixuanyuan (B)",
+        "desc-gw": "Zhuge Kongming reduces cooldown of Ultimate Evasion, making it easier to land a Time Lock on the enemy. In addition, DP Kiana, whose Ultimate skill creates a long-lasting Time Fracture, is highly compatible with Black Jixuanyuan.\nOne may raise the SP acquisition rate with 2nd Sacred Relic, or increase CRT with Mjolnir, or improve support capabilities with Judgement of Shamash. It is recommended to have a wide range of weapon choices."
+      },
+      {
+        "rating-gw": 4,
+        "rating-gw-max": 5,
+        "weapon": "Thunder Kikaku",
+        "stigT": "Tesla Band (T)",
+        "stigM": [
+          "Tesla Band (M)",
+          "Mei: Pool Party (M)"
+        ],
+        "stigB": "Issac Newton (B)",
+        "desc-gw": "With Thunder Kikaku and Issac Newton, damage dealt to enemies by Shadow Knight Fuka and Oath of Judah is improved. While the stages where this set shines are somewhat limited, it is recommended for score-based stages such as Memorial Arena."
+      },
+      {
+        "rating-gw": 3,
+        "rating-gw-max": 5,
+        "weapon": "Artemis' Guardian",
+        "stigT": "Zhuge Kongming (T)",
+        "stigM": [
+          "Shakespeare (M)",
+          "Fuxi (M)"
+        ],
+        "stigB": [
+          "Shakespeare (B)",
+          "Fuxi (B)"
+        ],
+        "desc-gw": "A set with emphasis on inflicting Time Lock.\nCooldown of Ultimate Evasion is greatly reduced with Zhuge Kongming and Shakespeare/Fuxi 2 Set Bonus, and Artemis' Guardian can inflict Time Lock through its weapon skill."
+      },
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "weapon": "Mjolnir",
+        "stigT": "Dark Jixuanyuan (T)",
+        "stigM": "Lier Scarlet (M)",
+        "stigB": "Dark Jixuanyuan (B)",
+        "desc-g8": "A set consisting of Dark Jixuanyuan, who increases damage dealt, movement speed and attack speed during Time Fracture, and Lier Scarlet, who recovers HP. The ease of activating Time Fracture via her Ultimate skill is what makes DP Kiana highly compatible with this set."
+      },
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "weapon": "2nd Sacred Relic",
+        "stigT": "Zhuge Kongming (T)",
+        "stigM": "Kallen - Hymn (M)",
+        "stigB": "Zhuge Kongming (B)",
+        "desc-g8": "A set specialized in endurance, where Zhuge Kongming shortens the cooldown of Ultimate Evasion and increases DEF, while Kallen - Hymn generates a Grace Shield. This combination is recommended for scenarios where DP Kiana mainly supports allies with HP recovery and Time Lock.\nThe 3rd Sacred Relic can hasten the activation of DP Kiana's Ultimate skill."
+      }
+    ],
+    "loadouts-discount": [
+      {
+        "rating-gw": 3,
+        "rating-gw-max": 5,
+        "weapon": [
+          "Water Spirit Type-II",
+          "Colt Peacemaker",
+          "Artemis' Guardian"
+        ],
+        "stigT": "Rinaldo (T)",
+        "stigM": "Rinaldo (M)",
+        "stigB": "Rinaldo (B)",
+        "desc-gw": "As DP Kiana's Combo Skill has high CRT, it is easy to activate Rinaldo's skills. Besides enhancing both firepower and durability, it is also possible to paralyze enemies. It is recommended to equip a weapon that inflicts status effects to activate allies' QTE."
+      },
+      {
+        "rating-gw": 2,
+        "rating-gw-max": 5,
+        "weapon": "Water Spirit Type-I",
+        "stigT": "Rowland (T)",
+        "stigM": "Rowland (M)",
+        "stigB": "Rowland (B)",
+        "desc-gw": "Rowland's skills imparts a sense of stability with HP recovery, status effect nullification, and DEF increase. On the offensive side, the damage dealt by Combo Skill is strengthened with Water Spirit Type-I, and CRT is increased by Rowland's 3 Set Bonus."
+      },
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "weapon": "Artemis' Guardian",
+        "stigT": "Elizabeth Bathory (T)",
+        "stigM": "Elizabeth Bathory (M)",
+        "stigB": "Elizabeth Bathory (B)",
+        "desc-gw": "When Artemis' Guardian, a weapon that floats enemies and inflicts Time Lock, is equipped on DP Kiana, who can also inflict Time Lock through Ultimate Evasion, the enemies' movements are severely restricted.\nElizabeth Bathory's skills rely on maintaining high HP, therefore she has good compatibility with DP Kiana who has HP recovery skills."
+      }
+    ],
+    "team-synergy": [
+      {
+        "valk-name": "Dimension Breaker",
+        "valk-char": "Bronya",
+        "desc-g8": "DB Bronya can inflict Time Lock on enemies with her Switch skill, so together with DP Kiana, the movements of enemies are severely restricted."
+      },
+      {
+        "valk-name": "Blood Rose",
+        "valk-char": "Himeko",
+        "desc-g8": "Since Blood Rose Himeko consumes HP during her powerful Ultimate skill, she is compatible with HP recovery specialst DP Kiana."
       }
     ]
   }
