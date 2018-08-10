@@ -327,11 +327,12 @@ class Main():
         for skill in rankData['skills']:
             skillStr = self.getSkillStr(skill)
             if isFirst:
-                self.nextRowWrite((rank, skillPriority, skillStr), 
-                                  (self.formatPotentialRank, 
+                self.nextRowWrite(('', skillPriority, skillStr), 
+                                  (self.formatPotentialSkills, 
                                    self.formatPotentialStar, 
                                    self.formatPotentialSkills),  
-                                  (4, 4, 16), merged=(False, False, True))
+                                  (4, 4, 16), merged=(False, False, True),
+                                  ignoreRowResize=(False, True, False))
                 rowStart = self.currCellR
                 isFirst = False
             else:
@@ -532,7 +533,8 @@ class Main():
         
         
     
-    def nextRowWrite(self, strings, styles, spaces=(24,), merged=False, minRowHeight=None):
+    def nextRowWrite(self, strings, styles, spaces=(24,), merged=False, 
+                     minRowHeight=None, ignoreRowResize=None):
         '''
         Writes the value(s) of the next row. Can take in raw string, a tuple 
         of strings, rich strings in the form of a tuple, or a tuple of 
@@ -597,14 +599,18 @@ class Main():
                 for j in range(1, spaces[i]):
                     self.ws.write(self.currCellR, self.currCellC + j, '', styles[i]) 
                     
+            if ignoreRowResize is None or not ignoreRowResize[i]:
+                maxNumLines = max(maxNumLines, numLines)
+                maxRowHeight = max(maxRowHeight, numLines * 25 * fontSize / 16)
             
-            maxNumLines = max(maxNumLines, numLines)
-            maxRowHeight = max(maxRowHeight, numLines * 25 * fontSize / 16)
             
             if minRowHeight is not None:
                 maxRowHeight = max(minRowHeight, maxRowHeight) 
             
             self.currCellC += spaces[i]
+        
+        if minRowHeight is not None:
+            maxRowHeight = max(minRowHeight, maxRowHeight) 
             
         self.ws.set_row(self.currCellR, maxRowHeight)
         self.rowHeights.append(maxRowHeight)
