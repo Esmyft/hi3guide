@@ -420,5 +420,242 @@
         "desc-g8": "Since Blood Rose Himeko consumes HP during her powerful Ultimate skill, she is compatible with HP recovery specialist DP Kiana."
       }
     ]
+  },
+
+  "KnightMoonbeam": {
+    "name": "Knight Moonbeam",
+    "name-jp": "白騎士・月光",
+    "char": "Kiana",
+    "type": 1,
+    
+    "score-abyss-gw": "S",
+    "score-coop-gw": "SS",
+    "score-arena-gw": "S",
+    
+    "score-abyss-g8": "B+",
+    "score-coop-g8": "A",
+    "score-arena-g8": "B",
+    "score-story-g8": "A",
+    
+    "score-damage-g8": "A",
+    "score-support-g8": "A",
+    "score-interrupt-g8": "B",
+    "score-difficulty-g8": "A",
+    
+    
+    "strengths": [
+      {
+        "title": "Huge damage to paralyzed/stunned enemies",
+        "text-gw": "Passive skill improves damage against paralyzed/stunned enemies by up to 150%, so inflicting either of these two status effects will grant a huge damage boost. On the flip side, not having either status effect present in enemies will make one feel that damage output is low. KMB Kiana is not strong against bosses that cannot be stunned or paralyzed."
+      },
+      {
+        "title": "Having Kepler (C) expands the selection of weapons",
+        "text-gw": "Originally, Hyper Railguns was essential. However after Kepler (C), which can more easily paralyze enemies, is introduced, the range of selection of weapons is expanded. One definitely should carry Kepler (C) when using KMB Kiana."
+      },
+      {
+
+        "title": "Can face multiple enemies at the same time",
+        "text-gw": "KMB Kiana's Special Attack shoots bullets in all directions. As multiple enemies are attacked at the same time, KMB Kiana excels are clearing mob enemies."
+      },
+      {
+        "title": "Time Fracture can be activated any time",
+        "text-gw": "When the evasion skill Aftershock is learned, Time Fracture can be activated with normal evasion skill (the duration is shorter than that of Ultimate Evasion, however), so it can be activated at any point of time.\rAt SSS Rank, the evasion skill Time Blink can be learned, which allows her Ultimate Evasion to be activated up to twice, facilitating the activation for Time Fracture. This high level of control is one of the charms of KMB Kiana."
+      },
+      {
+        "title": "Very successful in co-op",
+        "text-gw": "KMB Kiana performs well on any stage, especially in co-op battles where she greatly outshine other valkyries. Her team skill greatly increases CRT and CDMG, raising offensive power in battle."
+      }
+    ],
+    
+    "weaknesses": [
+      {
+        "title": "Low damage against status immune enemies",
+        "text-gw": "While absurdly effective against enemies that can be stunned or paralyzed, KMB Kiana can only put out normal damage to those who can't. Against bosses stages where her passive is unlikely to activate, it is necessary to prepare another attacker."
+      },
+      {
+        "title": "Careful SP management after Ultimate needed",
+        "text-gw": "As her Ultimate is strong, it costs a hefty 125 SP. Also, if Energy Amplify is learned, all SP will be used up in exchange for dealing more damage.\nSince weapons skills cannot be used immediately afterwards, one needs to carefully consider whether Energy Amplify should be learned, in addition to managing SP properly."
+      }
+    ],
+    
+    "potential": {
+      "SS": {
+        "priority-g8": 2,
+        "priority-gw": 3,
+        "skills": [
+          {
+            "skill-name": "Nebula Glitter",
+            "skill-type": 0
+          },
+          {
+            "skill-name": "Nebula Core",
+            "skill-type": 2
+          },
+          {
+            "skill-name": "Aftermath",
+            "skill-type": 4
+          }
+        ],
+        "rank-desc-gw": "Physical damage increases by 5% for each enemy inflicted with Time Slow, up to 50%. Since all damage increase and physical damage increase interacts multiplicatively, the 150% increase in damage against paralyzed or stunned enemies from passive skill Impact Resonance complements very well.\nAt SSS rank, Ultimate Evasion can be triggered twice, and the control power by Time Fracture is more polished. Ultimately one should aim for SSS rank, so SS rank is necessarily as well."
+      },
+      "SSS": {
+        "priority-g8": 2,
+        "priority-gw": 3,
+        "skills": [
+          {
+            "skill-name": "Time Blink",
+            "skill-type": 2
+          }
+        ],
+        "rank-desc-gw": "As mentioned above, the number of times of triggering Time Fracture with Ultimate Evasion increases and its cooldown decreases. To become even further more competent in stages like Memorial Arena where Time Fracture is highly valued, SSS rank should be prioritized."
+      }
+    },
+    "loadouts-premium": [
+      {
+        "rating-gw": 5,
+        "rating-gw-max": 5,
+        "weapon": [
+          "Hyper Railguns",
+          "Mjolnir"
+        ],
+        "stigT": "Kepler (T)",
+        "stigM": "Kepler (M)",
+        "stigB": "Cleopatra (B)",
+        "desc-gw": "Thanks to the Hyper Railguns and Kepler (C), the enemy can be easily paralyzed while KMB Kiana's passive skill and Cleopatra (B) greatly increases the damage dealt to paralyzed enemies. KMB Kiana's Leader Skill also meshes well with Kepler's 2 Set Bonus in greatly increasing CDMG."
+      },
+      {
+        "rating-gw": 4,
+        "rating-gw-max": 5,
+        "weapon": "Hyper Railguns",
+        "stigT": [
+          "Cleopatra (T)",
+          "Lier Scarlet (T)"
+        ],
+        "stigM": "Planck (M)",
+        "stigB": "Cleopatra (B)",
+        "desc-gw": "A set that utilizes physical damage and all damage multipliers. Since physical damage increase and all damage increase is calculated multiplicatively, a set that incorporates Planck (C) will see a significant increase in damage."
+      },
+      {
+        "rating-gw": 4,
+        "rating-gw-max": 5,
+        "weapon": "Mjolnir",
+        "stigT": "Cleopatra (T)",
+        "stigM": "Kepler (M)",
+        "stigB": "Cleopatra (B)",
+        "desc-gw": "-"
+      },
+      /*{
+        "rating-gw": ,
+        "rating-gw-max": ,
+        "weapon": ,
+        "stigT": "",
+        "stigM": "",
+        "stigB": "",
+        "desc-gw": ""
+      },*/
+      {
+        "rating-gw": 5,
+        "rating-gw-max": 5,
+        "weapon": [
+          "2nd Sacred Relic", 
+          "Mjolnir",
+          "Judgement of Shamash"
+        ],
+        "stigT": "Zhuge Kongming (T)",
+        "stigM": "Dark Jixuanyuan (M)",
+        "stigB": "Dark Jixuanyuan (B)",
+        "desc-gw": "Zhuge Kongming reduces cooldown of Ultimate Evasion, making it easier to land a Time Lock on the enemy. In addition, DP Kiana, whose Ultimate skill creates a long-lasting Time Fracture, is highly compatible with Black Jixuanyuan.\nOne may raise the SP acquisition rate with 2nd Sacred Relic, or increase CRT with Mjolnir, or improve support capabilities with Judgement of Shamash. It is recommended to have a wide range of weapon choices."
+      },
+      {
+        "rating-gw": 4,
+        "rating-gw-max": 5,
+        "weapon": "Thunder Kikaku",
+        "stigT": "Tesla Band (T)",
+        "stigM": [
+          "Tesla Band (M)",
+          "Mei: Pool Party (M)"
+        ],
+        "stigB": "Issac Newton (B)",
+        "desc-gw": "With Thunder Kikaku and Issac Newton, damage dealt to enemies by Shadow Knight Fuka and Oath of Judah is improved. While the stages where this set shines are somewhat limited, it is recommended for score-based stages such as Memorial Arena."
+      },
+      {
+        "rating-gw": 3,
+        "rating-gw-max": 5,
+        "weapon": "Artemis' Guardian",
+        "stigT": "Zhuge Kongming (T)",
+        "stigM": [
+          "Shakespeare (M)",
+          "Fuxi (M)"
+        ],
+        "stigB": [
+          "Shakespeare (B)",
+          "Fuxi (B)"
+        ],
+        "desc-gw": "A set with emphasis on inflicting Time Lock.\nCooldown of Ultimate Evasion is greatly reduced with Zhuge Kongming and Shakespeare/Fuxi 2 Set Bonus, and Artemis' Guardian can inflict Time Lock through its weapon skill."
+      },
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "weapon": "Mjolnir",
+        "stigT": "Dark Jixuanyuan (T)",
+        "stigM": "Lier Scarlet (M)",
+        "stigB": "Dark Jixuanyuan (B)",
+        "desc-g8": "A set consisting of Dark Jixuanyuan, who increases damage dealt, movement speed and attack speed during Time Fracture, and Lier Scarlet, who recovers HP. The ease of activating Time Fracture via her Ultimate skill is what makes DP Kiana highly compatible with this set."
+      },
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "weapon": "2nd Sacred Relic",
+        "stigT": "Zhuge Kongming (T)",
+        "stigM": "Kallen - Hymn (M)",
+        "stigB": "Zhuge Kongming (B)",
+        "desc-g8": "A set specialized in endurance, where Zhuge Kongming shortens the cooldown of Ultimate Evasion and increases DEF, while Kallen - Hymn generates a Grace Shield. This combination is recommended for scenarios where DP Kiana mainly supports allies with HP recovery and Time Lock.\nThe 3rd Sacred Relic can hasten the activation of DP Kiana's Ultimate skill."
+      }
+    ],
+    "loadouts-discount": [
+      {
+        "rating-gw": 3,
+        "rating-gw-max": 5,
+        "weapon": [
+          "Water Spirit Type-II",
+          "Colt Peacemaker",
+          "Artemis' Guardian"
+        ],
+        "stigT": "Rinaldo (T)",
+        "stigM": "Rinaldo (M)",
+        "stigB": "Rinaldo (B)",
+        "desc-gw": "As DP Kiana's Combo Skill has high CRT, it is easy to activate Rinaldo's skills. Besides enhancing both firepower and durability, it is also possible to paralyze enemies. It is recommended to equip a weapon that inflicts status effects to activate allies' QTE."
+      },
+      {
+        "rating-gw": 2,
+        "rating-gw-max": 5,
+        "weapon": "Water Spirit Type-I",
+        "stigT": "Rowland (T)",
+        "stigM": "Rowland (M)",
+        "stigB": "Rowland (B)",
+        "desc-gw": "Rowland's skills imparts a sense of stability with HP recovery, status effect nullification, and DEF increase. On the offensive side, the damage dealt by Combo Skill is strengthened with Water Spirit Type-I, and CRT is increased by Rowland's 3 Set Bonus."
+      },
+      {
+        "rating-g8": null,
+        "rating-g8-max": null,
+        "weapon": "Artemis' Guardian",
+        "stigT": "Elizabeth Bathory (T)",
+        "stigM": "Elizabeth Bathory (M)",
+        "stigB": "Elizabeth Bathory (B)",
+        "desc-gw": "When Artemis' Guardian, a weapon that floats enemies and inflicts Time Lock, is equipped on DP Kiana, who can also inflict Time Lock through Ultimate Evasion, the enemies' movements are severely restricted.\nElizabeth Bathory's skills rely on maintaining high HP, therefore she has good compatibility with DP Kiana who has HP recovery skills."
+      }
+    ],
+    "team-synergy": [
+      {
+        "valk-name": "Dimension Breaker",
+        "valk-char": "Bronya",
+        "desc-g8": "DB Bronya can inflict Time Lock on enemies with her Switch skill, so together with DP Kiana, the movements of enemies are severely restricted."
+      },
+      {
+        "valk-name": "Blood Rose",
+        "valk-char": "Himeko",
+        "desc-g8": "Since Blood Rose Himeko consumes HP during her powerful Ultimate skill, she is compatible with HP recovery specialist DP Kiana."
+      }
+    ]
   }
 }
